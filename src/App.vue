@@ -9,9 +9,9 @@
           <h2>{{ product.product }} </h2>
           <h3>{{ product.brand }}</h3>
           <h3>$ {{ product.price }}</h3>
-          <button @click="editProduct(product.product)">Editar</button>
+          <button @click="editProduct(product.id)">Editar</button>
       </aside>
-      <div v-if="product.edit"> <ModalEditForm /></div>
+      <div v-if="product.edit"> <ModalEditForm :id="product.id" :product="product.product" :brand="product.brand" :price="product.price" @confirm="confirmEdit" @cancel="cancelEdit"/> </div>
     </li>
   </ul>
 
@@ -27,6 +27,7 @@ export default {
     return {
       products: [
         {
+          id: 1,
           product:"Cerveza Heineken 473 Ml",
           brand: "Heineken",
           image: require("./assets/CervezaHeineken473Ml.png"),
@@ -34,6 +35,7 @@ export default {
           edit: false,
         },
         {
+          id: 2,
           product: "Cerveza Corona 330 Ml",
           brand: "Corona",
           image: require("./assets/CervezaCoronaNoRetornable330Ml.png"),
@@ -41,6 +43,7 @@ export default {
           edit: false,
         },
         {
+          id: 3,
           product: "Cerveza Grolsch 925 Ml",
           brand : "Grolsch",
           image : require("./assets/CervezaGrolschRetornable925Ml.png"),
@@ -54,10 +57,28 @@ export default {
     ModalEditForm
 },
   methods: {
-    editProduct(product){
-      console.log(product)
+    editProduct(id){
       this.products.forEach((element) => {
-        if (element.product == product) {
+        if (element.id == id) {
+          element.edit = !element.edit
+        }
+      })
+    },
+    confirmEdit(id, product, brand, price) {
+      this.products.forEach((element) => {
+        if ( element.id === id) {
+          element.product = product
+          element.brand = brand
+          element.price = price
+          element.edit = !element.edit
+        }
+        
+      })
+    },
+    cancelEdit(id) {
+      this.products.forEach( element => {
+        if(element.id === id) {
+          console.log(element)
           element.edit = !element.edit
         }
       })

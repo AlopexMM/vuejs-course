@@ -1,21 +1,26 @@
 <template>
     <div class="backdrop">
         <div class="modal">
+            <p hidden id="id">{{ id }}</p>
             <div>
                 <label for="product">Nombre: </label>
-                <input type="text" name="product" v-if="name !== undefined" :value="product">
-                <input type="text" name="product" v-else>
+                <input type="text" id="product" name="product" v-if="product !== undefined" :value="product">
+                <input type="text" id="product" name="product" v-else>
             </div>
             <div>
                 <label for="brand">Marca: </label>
-                <input type="text" name="brand" v-if="brand !== undefined" :value="brand">
-                <input type="text" name="brand" v-else>
+                <input type="text" id="brand" name="brand" v-if="brand !== undefined" :value="brand">
+                <input type="text" id="brand" name="brand" v-else>
             </div>
             <div>
                 <label for="price">Precio: $ </label>
-                <input type="number" name="price" v-if="price !== undefined" :value="price">
-                <input type="number" name="price">
-            </div>        
+                <input type="text" id="price" name="price" v-if="price !== undefined" :value="price">
+                <input type="text" id="price" name="price" v-else>
+            </div> 
+            <div>
+                <button @click="confirmButton">Confirmar</button>
+                <button @click="cancelButton">Cancelar</button>
+            </div>      
         </div>
     </div>
 </template>
@@ -23,8 +28,20 @@
 <script>
 
 export default {
-    data() {
-        props: [ product, brand, price ]
+    el: '.backdrop',
+    props: [ 'id', 'product', 'brand', 'price' ],
+    methods: {
+        confirmButton() {
+            const id = parseInt(this.$el.querySelector('#id').innerText)
+            const product = this.$el.querySelector('#product').value
+            const brand = this.$el.querySelector('#brand').value
+            const price = parseFloat(this.$el.querySelector('#price').value)
+            this.$emit('confirm', id, product, brand, price)
+        },
+        cancelButton() {
+            const id = parseInt(this.$el.querySelector('#id').innerText)
+            this.$emit('cancel', id)
+        }
     }
 }
 
@@ -40,7 +57,7 @@ export default {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: #000;
+    background: rgba(0,0,0,0.5)
 
 }
 
@@ -50,5 +67,10 @@ export default {
     margin: 100px auto;
     background: #fff;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
 }
+
 </style>
