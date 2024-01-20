@@ -95,6 +95,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 16px;
 }
 
 body {
@@ -102,14 +103,28 @@ body {
     max-width: 980px;
     margin: 20px auto;
 }
+
+button {
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    font-size: 16px;
+    background-color: #367bf0;
+    color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+}
+
 p, h3, ul {
     margin: 0;
     padding: 0;
 }
+
 ul {
     display: flex;
     justify-content: space-between;
 }
+
 li {
     list-style-type: none;
     background: #fff;
